@@ -1,1 +1,0 @@
-This project contains unit test examples for various Java EE technologies
