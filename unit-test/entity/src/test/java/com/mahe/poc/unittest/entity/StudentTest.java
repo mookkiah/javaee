@@ -44,7 +44,6 @@ public class StudentTest {
 	@Test
 	public void test1_Save(){
 		Student student = new Student();
-		student.setId(25L);
 		student.setFirstName("Mahendran");
 		student.setLastName("Mookkiah");
 		student.setBirthDate(new Date());
@@ -66,5 +65,22 @@ public class StudentTest {
 				.setParameter("studentFirstName", "Mahendran")
 		        .getResultList().get(0);
 		Assert.assertTrue("Mookkiah".equals(student.getLastName()));
+	}
+	
+	@Test
+	public void test3_Delete(){
+	    
+	    Student student = mEntityManager.createQuery("FROM Student S WHERE S.firstName LIKE :studentFirstName", Student.class)
+				.setParameter("studentFirstName", "Mahendran")
+		        .getResultList().get(0);
+	    
+	    EntityTransaction trx = mEntityManager.getTransaction();
+
+		   //Start the transaction
+		   trx.begin();
+		   //Persist the object in the DB
+		   mEntityManager.remove(student);
+		   //Commit and end the transaction
+		   trx.commit();
 	}
 }
